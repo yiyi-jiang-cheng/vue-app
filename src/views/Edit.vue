@@ -47,9 +47,7 @@ export default {
       if (localStorage.getItem("token") && localStorage.getItem("userId")) {
         this.token = localStorage.getItem("token");
         this.userId = localStorage.getItem("userId");
-        console.log(this.token);
         this.$axios.get("/user/" + this.userId).then((res) => {
-          console.log(res);
           const { data, statusCode } = res.data;
           // console.log(data)
           if (statusCode === 200) {
@@ -61,8 +59,19 @@ export default {
     showedit() {
       this.show = true;
     },
-    editing(){
-      console.log(this.nickname,this.password)
+    async editing(){
+      // console.log(this.nickname,this.password)
+      let id = localStorage.getItem('userId')
+      let res = await this.$axios.post(`/user_update/${id}`,{
+        nickname:this.nickname,
+        password:this.password,
+        gender:this.radio
+      })
+      console.log(res)
+      const {statusCode,message}=res.data
+      if(statusCode===200){
+        this.getinfo()
+      }
     }
   },
 };

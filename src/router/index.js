@@ -48,7 +48,7 @@ const routes = [
     path:'/setting',component:setting
   },
   {
-    path:'/Edit',component:edit
+    path:'/edit',component:edit
   }
 ]
 // 挂载路由对象
@@ -67,7 +67,8 @@ router.beforeEach((to,from,next)=>{
   // from 打哪来
   // to 到哪去
   // next是否放行 next()放行  next(false)不放行  next('/login')前往login页
-  if(to.path === '/setting'){
+  let path = ['/setting','/myfollow','/Edit']
+  if(path.includes(to.path)){
     const token = localStorage.getItem('token')
     if(token){
       next()
